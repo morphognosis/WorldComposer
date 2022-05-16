@@ -18,6 +18,6 @@ To run:
 1. Run world_composer.sh to build world path datesets for neural networks.
    "-help" for usage.
    "-dilateEvents normalize -skewIntervals .5" to generate Morphognosis paths.
-2. Train and test neural networks: python world_path_&star;.py and world_path_nn.sh
-   Results written to world_path_&star;_results.json files.
+2. Train and test neural networks: python world_path_&ast;.py and world_path_nn.sh
+   Results written to world_path_&ast;_results.json files.
 
