@@ -12,3 +12,11 @@ world_path_nn.sh: World path neural network (deeplearning4j)<br />
 world_path_nn.py: NN (Keras)<br />
 world_path_rnn.py: LSTM (Keras)<br />
 world_path_tcn.py: TCN (Keras)<br />
+
+To run:
+
+1. Run world_composer.sh to build world path datesets for neural networks.
+   "-help" for usage.
+   "-dilateEvents normalize -skewIntervals .5" to generate Morphognosis paths.
+2. Train and test neural networks: python world_path_*.py and world_path_nn.sh
+
