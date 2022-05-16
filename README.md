@@ -6,9 +6,9 @@ Build with Eclipse project and export to bin/worldcomposer.jar to run with comma
 
 Commands:
 
-world_composer.sh: Compose paths by inserting, substituting, and deleting modular segments on a base path. 
-world_grammar.sh: Generate a grammar that can produce paths from a starting state to a goal state in the world.
-world_path_nn.sh: World path neural network (deeplearning4j)
-world_path_nn.py: NN (Keras)
-world_path_rnn.py: LSTM (Keras)
-world_path_tcn.py: TCN (Keras)
+world_composer.sh: Compose paths by inserting, substituting, and deleting modular segments on a base path.<br /> 
+world_grammar.sh: Generate a grammar that can produce paths from a starting state to a goal state in the world.<br />
+world_path_nn.sh: World path neural network (deeplearning4j)<br />
+world_path_nn.py: NN (Keras)<br />
+world_path_rnn.py: LSTM (Keras)<br />
+world_path_tcn.py: TCN (Keras)<br />
