@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>morphognosis</groupId>
-    <artifactId>WorldComposer</artifactId>
+    <artifactId>TaskComposer</artifactId>
     <version>1.0</version>
 
-    <name>WorldComposer</name>
-    <url>http://tom.portegys.com/research.html#worldcomposer</url>
+    <name>TaskComposer</name>
+    <url>http://tom.portegys.com/research.html#taskcomposer</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
