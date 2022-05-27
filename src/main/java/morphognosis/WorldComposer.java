@@ -62,7 +62,11 @@ public class WorldComposer
    // Skews interval sizes into past, larger intervals contain more events.
    // 0.0: intervals are unskewed and equal size.
    // > 0.0 <= 1.0: intervals in the past are greater size and have greater event capacity.
+   // Does not apply to RNN or TCN.   
    public static float INTERVAL_SIZE_SKEW = 0.0f;
+   
+   // Train modular paths?
+   public static boolean TRAIN_MODULAR_PATHS = true;
 
    // mapIntervals() output.
    public int   numIntervals;
@@ -87,10 +91,11 @@ public class WorldComposer
       "        [-dilateEvents <\"overlay\" | \"accumulate\" | \"normalize\"> (stretch events over time)\n" +
       "            [-consolidateIntervals <factor> (consolidate time interval sizes, default=" + INTERVAL_SIZE_CONSOLIDATION + ")]\n" +
       "            [-skewIntervals <skew> (skew interval sizes into past, larger intervals contain more events, default=" + INTERVAL_SIZE_SKEW + ")]]\n" +
-      "        [-exportPathNNdatasetCSV (default=\"" + PATH_NN_DATASET_CSV_FILENAME + "\")>]\n" +
-      "        [-exportPathNNdataset (default=\"" + PATH_NN_DATASET_FILENAME + "\")>]\n" +
-      "        [-exportPathRNNdataset (default=\"" + PATH_RNN_DATASET_FILENAME + "\")>]\n" +
-      "        [-exportPathTCNdataset (default=\"" + PATH_TCN_DATASET_FILENAME + "\")>]\n" +
+      "        [-noTrainModularPaths (do not train modular paths)]\n" +
+      "        [-exportPathNNdatasetCSV (default=\"" + PATH_NN_DATASET_CSV_FILENAME + "\")]\n" +
+      "        [-exportPathNNdataset (default=\"" + PATH_NN_DATASET_FILENAME + "\")]\n" +
+      "        [-exportPathRNNdataset (default=\"" + PATH_RNN_DATASET_FILENAME + "\")]\n" +
+      "        [-exportPathTCNdataset (default=\"" + PATH_TCN_DATASET_FILENAME + "\")]\n" +
       "        [-randomSeed <seed> (default=" + RANDOM_SEED + ")]\n" +
       "Exit codes:\n" +
       "  0=success\n" +
@@ -376,6 +381,11 @@ public class WorldComposer
             gotSkew = true;
             continue;
          }
+         if (args[i].equals("-noTrainModularPaths"))
+         {
+        	TRAIN_MODULAR_PATHS = false;
+            continue;
+         }         
          if (args[i].equals("-exportPathNNdatasetCSV"))
          {
             if ((i < args.length - 1) && !args[i + 1].startsWith("-"))
@@ -744,11 +754,18 @@ public class WorldComposer
             {
                pathLength = p.length;
             }
-            numPaths += p.length - 1;
+            if (TRAIN_MODULAR_PATHS)
+            {
+            	numPaths += p.length - 1;
+            }               
          }
          if (!PREDICT_PATH)
          {
-            numPaths += modularPaths.size() + 1;
+            numPaths++;
+            if (TRAIN_MODULAR_PATHS)
+            {
+            	numPaths += modularPaths.size();
+            }                  
          }
          for (int[] p : testPaths)
          {
@@ -769,7 +786,11 @@ public class WorldComposer
                                 ((pathEncodedTypeSize * pathEncodedValueSize) * numIntervals));
          }
          System.out.println("X_train:");
-         int n = modularPaths.size() + 1;
+         int n = 1;
+         if (TRAIN_MODULAR_PATHS)
+         {
+        	 n += modularPaths.size();
+         }
          for (int i = 0; i < n; i++)
          {
             int[] values;
@@ -1150,11 +1171,18 @@ public class WorldComposer
             {
                pathLength = p.length;
             }
-            numPaths += p.length - 1;
+            if (TRAIN_MODULAR_PATHS)
+            {
+            	numPaths += p.length - 1;
+            }
          }
          if (!PREDICT_PATH)
          {
-            numPaths += modularPaths.size() + 1;
+            numPaths++;
+            if (TRAIN_MODULAR_PATHS)
+            {
+            	numPaths += modularPaths.size();
+            }            
          }
          for (int[] p : testPaths)
          {
@@ -1176,7 +1204,11 @@ public class WorldComposer
          }
          printWriter.print("X_train = [ ");
          String X_train = "";
-         int    n       = modularPaths.size() + 1;
+         int n = 1;
+         if (TRAIN_MODULAR_PATHS)
+         {
+        	 n += modularPaths.size();
+         }
          for (int i = 0; i < n; i++)
          {
             int[] values;
@@ -1568,7 +1600,11 @@ public class WorldComposer
                pathLength = p.length;
             }
          }
-         int n = modularPaths.size() + 1;
+         int n = 1;
+         if (TRAIN_MODULAR_PATHS)
+         {
+        	 n += modularPaths.size();
+         }
          printWriter.println("X_train_shape = [ " + n + ", " + pathLength + ", " +
                              (pathEncodedTypeSize + pathEncodedValueSize) + " ]");
          printWriter.print("X_train_seq = [ ");
