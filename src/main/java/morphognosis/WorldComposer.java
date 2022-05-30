@@ -65,6 +65,9 @@ public class WorldComposer
    // Does not apply to RNN or TCN.   
    public static float INTERVAL_SIZE_SKEW = 0.0f;
    
+   // Mask path type.
+   public static boolean MASK_PATH_TYPE = false;
+   
    // Train modular paths?
    public static boolean TRAIN_MODULAR_PATHS = true;
 
@@ -88,6 +91,7 @@ public class WorldComposer
       "        [-numInsertionTestPaths <quantity> (default=" + NUM_INSERTION_TEST_PATHS + ")]\n" +
       "        [-numSubstitutionTestPaths <quantity> (default=" + NUM_SUBSTITUTION_TEST_PATHS + ")]\n" +
       "        [-numDeletionTestPaths <quantity> (default=" + NUM_DELETION_TEST_PATHS + ")]\n" +
+      "        [-maskPathType (mask path type identifier)]\n" +      
       "        [-dilateEvents <\"overlay\" | \"accumulate\" | \"normalize\"> (stretch events over time)\n" +
       "            [-consolidateIntervals <factor> (consolidate time interval sizes, default=" + INTERVAL_SIZE_CONSOLIDATION + ")]\n" +
       "            [-skewIntervals <skew> (skew interval sizes into past, larger intervals contain more events, default=" + INTERVAL_SIZE_SKEW + ")]]\n" +
@@ -296,7 +300,12 @@ public class WorldComposer
                System.exit(1);
             }
             continue;
-         }
+         }         
+         if (args[i].equals("-maskPathType"))
+         {
+        	MASK_PATH_TYPE = true;
+            continue;
+         }         
          if (args[i].equals("-dilateEvents"))
          {
             i++;
@@ -1942,6 +1951,10 @@ public class WorldComposer
          return(type + ":" + value + ", ");
       }
       String code = "";
+      if (MASK_PATH_TYPE)
+      {
+    	  type = 0;
+      }
       for (int i = 0; i < pathEncodedTypeSize; i++)
       {
          if (i == type)
@@ -1981,9 +1994,17 @@ public class WorldComposer
       if (hotDebug)
       {
          code = "{";
-         for (int i : types)
+         if (MASK_PATH_TYPE)
          {
-            code += i + " ";
+	         for (int i = 0; i < types.size(); i++)
+	         {
+	            code += "0 ";
+	         }        	 
+         } else {
+	         for (int i : types)
+	         {
+	            code += i + " ";
+	         }
          }
          code += "}";
          code += ":{";
@@ -2000,6 +2021,7 @@ public class WorldComposer
          for (int j = 0, k = types.size(); j < k; j++)
          {
             int t = types.get(j);
+            if (MASK_PATH_TYPE) t = 0;
             if (t == i)
             {
                int v = values.get(j);
