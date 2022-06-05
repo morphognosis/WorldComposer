@@ -3,13 +3,16 @@
 Biological neural networks operate in the presence of task disruptions as they guide organisms toward goals. 
 A familiar stream of stimulus-response causations can be disrupted by subtask streams imposed by the environment. 
 For example, taking a familiar path to a foraging area might be disrupted by the presence of a predator, 
-necessitating a ‚Äúdetour‚Äù to the area. The detour can be an alternative path that must be dynamically 
+necessitating a ìdetourî to the area. The detour can be a known alternative path that must be dynamically 
 composed with the original path to accomplish the overall task. In this project, overarching base paths are 
 disrupted by independently learned path modules in the form of insertion, substitution, and deletion modifications 
-to the base paths such that the resulting modified paths are novel to the network. The network's performance
-is then tested on these paths that have been learned in piecemeal fashion. Effectively, the network must compose 
-a new task on the fly. Several network types are tested: Time delay neural network (TDNN), Long short-term memory (LSTM), 
-Temporal convolutional network (TCN), and Morphognosis.
+to the base paths such that the resulting modified paths are novel to the network. The networkís performance 
+is then tested on these paths that have been learned in piecemeal fashion. In sum, the network must compose a 
+new task on the fly. Several network architectures are tested: Time delay neural network (TDNN), Long short-term memory 
+(LSTM), Temporal convolutional network (TCN), and Morphognosis, a hierarchical neural network. LSTM and Morphognosis 
+perform significantly better for this task.
+
+[Paper](http://tom.portegys.com/research.html#taskcomposer)
 
 Build with Eclipse project and export to bin/worldcomposer.jar to run with commands in work directory.
 
