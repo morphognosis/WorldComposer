@@ -12,7 +12,7 @@ new task on the fly. Several network architectures are tested: Time delay neural
 (LSTM), Temporal convolutional network (TCN), and Morphognosis, a hierarchical neural network. LSTM and Morphognosis 
 perform significantly better for this task.
 
-[Paper](http://tom.portegys.com/research.html#taskcomposer)
+[Dynamically handling task disruptions by composing together behavior modules](http://tom.portegys.com/research.html#taskcomposer)
 
 Build with Eclipse project and export to bin/worldcomposer.jar to run with commands in work directory.
 
